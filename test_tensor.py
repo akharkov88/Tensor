@@ -51,14 +51,12 @@ def test_script2():
     assert browser.find_element(By.XPATH, tensor.h2_contact).get_attribute('innerHTML') in 'г. Москва'
     assert len(browser.find_elements(By.XPATH, tensor.contacts_list))!=0
     browser.find_element(By.XPATH, tensor.h2_contact).click()
-    WebDriverWait(browser, 20).until(EC.presence_of_element_located((By.XPATH, tensor.kamchatskij))).click()
-    time.sleep(5)
+    WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, tensor.kamchatskij))).click()
+    assert WebDriverWait(browser, 20).until(EC.visibility_of_element_located((By.XPATH, tensor.h2_contact))).get_attribute('innerHTML') in 'Камчатский край'
     assert 'СБИС Контакты — Камчатский край' in browser.title
     assert '41-kamchatskij-kraj' in browser.current_url
-    assert browser.find_element(By.XPATH, tensor.h2_contact).get_attribute('innerHTML') in 'Камчатский край'
     assert len(browser.find_elements(By.XPATH, tensor.contacts_list))!= 0
-    browser.quit()
-
+    
 def test_script3():
     browser: WebDriver = webdriver.Chrome()
     browser.get(tensor.start_url)
@@ -82,6 +80,6 @@ def convert_bytes(num):
         if num < 1024.0:
             return "%3.2f %s" % (num, x)
         num /= 1024.0
-# script3(browser)
+
 
 
