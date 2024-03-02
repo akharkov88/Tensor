@@ -43,7 +43,8 @@ def test_script1():
         else:
             comparison={'height':val.get_attribute('height'),'width':val.get_attribute('width')}
     browser.quit()
-def test_script2():
+
+def test_script():
     browser: WebDriver = webdriver.Chrome()
     browser.get(tensor.start_url)
     assert 'СБИС — экосистема для бизнеса: учет, управление и коммуникации' in browser.title
@@ -52,12 +53,13 @@ def test_script2():
     assert len(browser.find_elements(By.XPATH, tensor.contacts_list))!=0
     browser.find_element(By.XPATH, tensor.h2_contact).click()
     WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, tensor.kamchatskij))).click()
-    assert WebDriverWait(browser, 20).until(EC.visibility_of_element_located((By.XPATH, tensor.h2_contact))).get_attribute('innerHTML') in 'Камчатский край'
+    time.sleep(2)
+    assert WebDriverWait(browser, 20).until(EC.element_to_be_clickable((By.XPATH, tensor.h2_contact))).get_attribute('innerHTML') in 'Камчатский край'
     assert 'СБИС Контакты — Камчатский край' in browser.title
     assert '41-kamchatskij-kraj' in browser.current_url
     assert len(browser.find_elements(By.XPATH, tensor.contacts_list))!= 0
-    
-def test_script3():
+    browser.quit()
+def test_script_():
     browser: WebDriver = webdriver.Chrome()
     browser.get(tensor.start_url)
     browser.execute_script("arguments[0].focus();", browser.find_element(By.XPATH, tensor.download))
